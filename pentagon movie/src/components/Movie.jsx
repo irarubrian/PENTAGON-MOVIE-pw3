@@ -1,3 +1,4 @@
+import { title } from "process";
 import React, { useEffect, useState } from "react";
 
 function Movies() {
@@ -5,56 +6,19 @@ function Movies() {
 
   // Predefined random movie titles
   const randomTitles = [
-    "The Silent Forest",
-    "Echoes of Tomorrow",
-    "Crimson Horizon",
-    "Whispers in the Dark",
-    "The Last Ember",
-    "Fading Shadows",
-    "Beyond the Veil",
-    "The Forgotten Path",
-    "Shattered Skies",
-    "The Eternal Flame",
-    "Midnight Mirage",
-    "The Hidden Kingdom",
-    "Rising Tides",
-    "The Lost Compass",
-    "Frozen Echoes",
-    "The Phantom Tide",
-    "Beneath the Stars",
-    "The Burning Sands",
-    "The Crystal Cavern",
-    "The Final Hour",
-    "The Shadowed Peak",
-    "The Golden Mask",
-    "The Broken Clock",
-    "The Silent Storm",
-    "The Last Voyage",
-    "The Forgotten City",
-    "The Crimson Crown",
-    "The Hollow Mountain",
-    "The Endless Road",
-    "The Silver Locket",
-    "The Darkened Sky",
-    "The Lost Relic",
-    "The Frozen Abyss",
-    "The Phantom's Curse",
-    "The Shattered Mirror",
-    "The Burning Horizon",
-    "The Silent River",
-    "The Hidden Truth",
-    "The Last Guardian",
-    "The Forgotten Dream",
-    "The Crimson Blade",
-    "The Shadowed Forest",
-    "The Final Stand",
-    "The Broken Chain",
-    "The Silent Echo",
-    "The Lost Temple",
-    "The Frozen Heart",
-    "The Phantom's Shadow",
-    "The Shattered Sky",
-    "The Burning Light"
+    "The Silent Forest", "Echoes of Tomorrow", "Crimson Horizon", "Whispers in the Dark",
+    "The Last Ember", "Fading Shadows", "Beyond the Veil", "The Forgotten Path",
+    "Shattered Skies", "The Eternal Flame", "Midnight Mirage", "The Hidden Kingdom",
+    "Rising Tides", "The Lost Compass", "Frozen Echoes", "The Phantom Tide",
+    "Beneath the Stars", "The Burning Sands", "The Crystal Cavern", "The Final Hour",
+    "The Shadowed Peak", "The Golden Mask", "The Broken Clock", "The Silent Storm",
+    "The Last Voyage", "The Forgotten City", "The Crimson Crown", "The Hollow Mountain",
+    "The Endless Road", "The Silver Locket", "The Darkened Sky", "The Lost Relic",
+    "The Frozen Abyss", "The Phantom's Curse", "The Shattered Mirror", "The Burning Horizon",
+    "The Silent River", "The Hidden Truth", "The Last Guardian", "The Forgotten Dream",
+    "The Crimson Blade", "The Shadowed Forest", "The Final Stand", "The Broken Chain",
+    "The Silent Echo", "The Lost Temple", "The Frozen Heart", "The Phantom's Shadow",
+    "The Shattered Sky", "The Burning Light"
   ];
   // hold our fetch movies
   const [Movies, setMovies] = useState([])
@@ -91,21 +55,16 @@ function Movies() {
 
   return (
     <div>
-      <h1>Movies</h1>
-      <ul>
+      <h1>Random Movie List</h1>
+      <div>
         {Movies.map((movie, Title) => (
-          <li key={Title}>
-            <h2>{movie.Title}</h2>
-            <img src={movie.Poster} alt={movie.Title} />
-            <p>Release Year: {movie.Year}</p>
-            <p>Rating: {movie.imdbRating}</p>
-            <p>{movie.Plot}</p>
-
-          </li>
+          <MovieCard key={Title} movie={movie} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
 
 export default Movies;
+
+//Jeremiah
