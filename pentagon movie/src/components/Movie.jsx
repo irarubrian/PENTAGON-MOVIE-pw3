@@ -1,5 +1,5 @@
-import { title } from "process";
 import React, { useEffect, useState } from "react";
+import MovieCard from "./MovieCard"; // Ensure MovieCard is imported
 
 function Movies() {
   const API_KEY = "a025f74a";
@@ -20,51 +20,51 @@ function Movies() {
     "The Silent Echo", "The Lost Temple", "The Frozen Heart", "The Phantom's Shadow",
     "The Shattered Sky", "The Burning Light"
   ];
-  // hold our fetch movies
-  const [Movies, setMovies] = useState([])
 
-  //useeffect to fetch movies
+  // State to hold fetched movies
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
+  // useEffect to fetch movies
   useEffect(() => {
-    // where the fetch movies are stored
-    const fetchedMovies = []
-    // loop  all through the random titles
-    // use promise.all to fetch all the titles
     const fetchMovies = async () => {
-      try{
+      try {
+        setLoading(true); // Set loading to true before fetching
         const responses = await Promise.all(
           randomTitles.map(title => fetch(`http://www.omdbapi.com/?t=${title}&apikey=${API_KEY}`))
         );
-        //turn the responses into json
+        // Turn the responses into JSON
         const data = await Promise.all(responses.map(res => res.json()));
 
-         //filter the vaild movies
+        // Filter the valid movies
         const validMovies = data.filter(movie => movie.Response === "True");
-        //set the movies state with valid movies
+
+        // Set the movies state with valid movies
         setMovies(validMovies);
-        // catch errors
-      }catch(error){
-        console.error('faild to fetch movies',error);}
+      } catch (error) {
+        console.error('Failed to fetch movies', error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
 
-      fetchMovies();
-    }
-  },[])// to run only once
-
-
-
+    fetchMovies(); // Call the fetchMovies function immediately
+  }, []); // Empty dependency array to run only once
 
   return (
     <div>
       <h1>Random Movie List</h1>
-      <div>
-        {Movies.map((movie, Title) => (
-          <MovieCard key={Title} movie={movie} />
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading movies...</p> // Show loading message while fetching
+      ) : (
+        <div>
+          {movies.map((movie) => (
+            <MovieCard key={movie.imdbID} movie={movie} /> // Use movie.imdbID as the key
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 export default Movies;
-
-//Jeremiah
