@@ -8,8 +8,8 @@ export default function Home() {
             <p> Your prime destination for discovering and exploring the finest movies.
             </p>
         <div>
-         <button onClick={() => navigate ("/Movies")}>Browse Movies</button>
-         <button onClick={() => navigate ("/About")}>Learn  more</button>
+            <button onClick={() => navigate ("/Movies")}>Browse Movies</button>
+            <button onClick={() => navigate ("/About")}>Learn  more</button>
         </div>
     </div>
     )
