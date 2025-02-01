@@ -17,7 +17,7 @@ const About = () => {
 
       <ul>
         <li><strong>React</strong> - A JavaScript library for building user interfaces.</li>
-        <li><strong>React Router</strong> - For handling navigation between different pages.</li>
+        <li><strong>Reanct Router</strong> - For handling navigation between different pages.</li>
         
       </ul>
 

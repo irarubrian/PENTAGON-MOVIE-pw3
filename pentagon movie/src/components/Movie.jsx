@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard"; // Ensure MovieCard is imported
+import AddMovie from "./AddMovie"; // Import AddMovie component
 
 function Movies() {
   const API_KEY = "a025f74a";
@@ -51,9 +52,15 @@ function Movies() {
     fetchMovies(); // Call the fetchMovies function immediately
   }, []); // Empty dependency array to run only once
 
+  // Function to add a new movie to the list
+  const handleAddMovie = (newMovie) => {
+    setMovies(prevMovies => [...prevMovies, newMovie]);
+  };
+
   return (
     <div>
       <h1>Random Movie List</h1>
+      <AddMovie onAddMovie={handleAddMovie} /> {/* Pass handleAddMovie to AddMovie */}
       {loading ? (
         <p>Loading movies...</p> // Show loading message while fetching
       ) : (

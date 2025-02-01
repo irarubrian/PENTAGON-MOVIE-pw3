@@ -1,74 +1,89 @@
-//Bryan
-//bryan
+import React, { useState, useEffect } from 'react';
 
-import { useState } from "react";
+const AddMovie = () => {
+  const [movie, setMovie] = useState({
+    title: '',
+    description: '',
+    releaseDate: ''
+  });
 
-function AddMovie({ onAddMovie }) {
-  // State to store the input values for new movie
-  const [title, setTitle] = useState("");
-  const [genre, setGenre] = useState("");
-  const [rating, setRating] = useState("");
+  // Load saved movie data from localStorage when the component mounts
+  useEffect(() => {
+    if (typeof window !== "undefined") { // Check if running in the browser
+      const savedMovie = localStorage.getItem("movieData");
+      if (savedMovie) {
+        setMovie(JSON.parse(savedMovie));
+      }
+    }
+  }, []);
 
-  // Handle form submission
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMovie({
+      ...movie,
+      [name]: value
+    });
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    
-    // Create a new movie object
-    const newMovie = {
-      id: Date.now(), // Generate a unique ID
-      title,
-      genre,
-      rating,
-    };
+    e.preventDefault();
 
-    // Call the onAddMovie function passed as a prop
-    onAddMovie(newMovie);
-    
-    // Reset the input fields after submission
-    setTitle("");
-    setGenre("");
-    setRating("");
+    // Save movie data to localStorage
+    if (typeof window !== "undefined") { // Check if running in the browser
+      localStorage.setItem("movieData", JSON.stringify(movie));
+    }
+
+    console.log('Movie Data:', movie);
+    alert('Movie Added Successfully!');
+
+    // Reset the form after submission
+    setMovie({
+      title: '',
+      description: '',
+      releaseDate: ''
+    });
   };
 
   return (
-    <div>
+    <div className="add-movie">
       <h2>Add a New Movie</h2>
       <form onSubmit={handleSubmit}>
-        {/* Input for movie title */}
-        <label>Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-
-        {/* Input for movie genre */}
-        <label>Genre:</label>
-        <input
-          type="text"
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
-          required
-        />
-
-        {/* Input for movie rating */}
-        <label>Rating:</label>
-        <input
-          type="number"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          min="1"
-          max="10"
-          required
-        />
-
-        {/* Submit button */}
+        <div>
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={movie.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={movie.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="releaseDate">Release Date:</label>
+          <input
+            type="date"
+            id="releaseDate"
+            name="releaseDate"
+            value={movie.releaseDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button type="submit">Add Movie</button>
       </form>
     </div>
   );
-}
+};
 
 export default AddMovie;
-
