@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MovieCard from "./MovieCard"; // Ensure MovieCard is imported
+import MovieCard from "./MovieCard";
 
 function Movies() {
   const API_KEY = "a025f74a";
-
-  // Predefined random movie titles
   const randomTitles = [
     "The Silent Forest", "Echoes of Tomorrow", "Crimson Horizon", "Whispers in the Dark",
     "The Last Ember", "Fading Shadows", "Beyond the Veil", "The Forgotten Path",
@@ -21,47 +19,47 @@ function Movies() {
     "The Shattered Sky", "The Burning Light"
   ];
 
-  // State to hold fetched movies
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
-  // useEffect to fetch movies
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        setLoading(true); // Set loading to true before fetching
+        setLoading(true);
         const responses = await Promise.all(
-          randomTitles.map(title => fetch(`http://www.omdbapi.com/?t=${title}&apikey=${API_KEY}`))
+          randomTitles.map(title =>
+            fetch(`http://www.omdbapi.com/?t=${title}&apikey=${API_KEY}`)
+              .then(res => {
+                if (!res.ok) throw new Error(`Failed to fetch ${title}`);
+                return res.json();
+              })
+          )
         );
-        // Turn the responses into JSON
-        const data = await Promise.all(responses.map(res => res.json()));
-
-        // Filter the valid movies
-        const validMovies = data.filter(movie => movie.Response === "True");
-
-        // Set the movies state with valid movies
+        const validMovies = responses.filter(movie => movie.Response === "True");
         setMovies(validMovies);
       } catch (error) {
-        console.error('Failed to fetch movies', error);
+        console.error("Failed to fetch movies", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
-    fetchMovies(); // Call the fetchMovies function immediately
-  }, []); // Empty dependency array to run only once
+    fetchMovies();
+  }, []);
 
   return (
     <div>
       <h1>Random Movie List</h1>
       {loading ? (
-        <p>Loading movies...</p> // Show loading message while fetching
-      ) : (
+        <p>Loading movies...</p>
+      ) : movies.length > 0 ? (
         <div>
           {movies.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} /> // Use movie.imdbID as the key
+            <MovieCard key={movie.imdbID} movie={movie} />
           ))}
         </div>
+      ) : (
+        <p>No movies found.</p>
       )}
     </div>
   );

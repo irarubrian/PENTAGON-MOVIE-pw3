@@ -1,25 +1,21 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Movies from "./Movies";
-import AddMovie from "./AddMovie";
 import About from "./About";
-import SearchMovie from "./SearchMovie";
-import Navbar from "./Navbar";
+import Movies from "./Movies";
+import NavBar from "./NabBar";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
+    <div className="all">
+      <NavBar />
+
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/add-movie" element={<AddMovie />} />
         <Route path="/about" element={<About />} />
-        <Route path="/search" element={<SearchMovie />} />
+        <Route path="/movies" element={<Movies />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 
 export default App;
-//Jeremiah
