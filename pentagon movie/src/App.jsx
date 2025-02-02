@@ -4,7 +4,8 @@ import Home from "./components/Home"; // Correct path
 import Movies from "./components/Movie"; // Correct path
 import AddMovie from "./components/AddMovie";
 import About from "./components/About";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/NavBar"; 
+import './App.css'; // Import the CSS file
 
 function App() {
   return (
